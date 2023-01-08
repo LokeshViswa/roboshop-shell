@@ -25,3 +25,5 @@ systemctl start catalogue
 cp ${script}
 yum install mongodb-org-shell -y
 
+mongo --host mongodb-dev.lokeshviswa44.online </app/schema/catalogue.js
+
