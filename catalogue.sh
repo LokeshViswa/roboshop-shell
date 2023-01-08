@@ -19,6 +19,9 @@ npm install
 cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service
 
 systemctl daemon-reload
-
 systemctl enable catalogue
 systemctl start catalogue
+
+cp ${script}
+yum install mongodb-org-shell -y
+
