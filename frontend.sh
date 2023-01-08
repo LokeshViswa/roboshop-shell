@@ -17,7 +17,7 @@ unzip /tmp/frontend.zip
 echo -e "\e[35m Copy Roboshop Nginx Config File \e[0m"
 cp ${script_location}/files/nginx-roboshop.conf /etc/nginx/default.d/roboshop.conf
 
-echo -e "\e[35m Enablr Nginx\e[0m"
+echo -e "\e[35m Enable Nginx\e[0m"
 systemctl enable nginx
 
 echo -e "\e[35m Start Nginx\e[0m"
