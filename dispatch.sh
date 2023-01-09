@@ -1,2 +1,6 @@
-print_head "Install Golang"
-yum install golang -y
+source common.sh
+
+component=dispatch
+schema_load=true
+
+GOLANG
