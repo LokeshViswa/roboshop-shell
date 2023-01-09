@@ -1,10 +1,21 @@
-script_location=$(pwd)
+source common.sh
 
-cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo
+print_head "Copy MongoDB Repo File"
+cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>{LOG}
+status_check
 
-yum install mongodb-org -y
+print_head "Install MongoDB"
+yum install mongodb-org -y &>>{LOG}
+status_check
 
-sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf
+print_head "Update MongoDB Listen Address"
+sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>>{LOG}
+status_check
 
-systemctl enable mongod
-systemctl restart mongod
+print_head "Install MongoDB"
+systemctl enable mongod &>>{LOG}
+status_check
+
+print_head "Install MongoDB"
+systemctl restart mongod &>>{LOG}
+status_check
