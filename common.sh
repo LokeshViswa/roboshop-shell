@@ -163,10 +163,10 @@ GOLANG() {
   APP_PREREQ
 
   print_head "Download Dependencies & Build"
-  cd /app
-  go mod init dispatch
-  go get
-  go build
+  cd /app &>>${LOG}
+  go mod init dispatch &>>${LOG}
+  go get &>>${LOG}
+  go build &>>${LOG}
   status_check
 
   SYSTEMD_SETUP
