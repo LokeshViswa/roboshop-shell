@@ -2,7 +2,7 @@
 
 ##### Change these values ###
 ZONE_ID="Z10181653L4NCOVM5PP96"
-DOMAIN="lokeshviswa44.online"
+DOMAIN="lokesh33.online"
 SG_NAME="allow-all"
 env=dev
 #############################
