@@ -1,3 +1,5 @@
+script_location=$(pwd)
+
 dnf module disable nodejs -y
 dnf module enable nodejs:18 -y
 
@@ -15,14 +17,14 @@ unzip /tmp/catalogue.zip
 cd /app
 npm install
 
-cp /files/catalogue.service /etc/systemd/system/catalogue.service
+cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service
 
 systemctl daemon-reload
 
 systemctl enable catalogue
 systemctl start catalogue
 
-cp /files/mongodb.repo /etc/yum.repos.d/mongo.repo
+cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongo.repo
 
 dnf install mongodb-org-shell -y
 
