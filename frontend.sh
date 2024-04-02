@@ -1,17 +1,24 @@
 script_location=$(pwd)
 
-dnf install nginx -y
+print_head "Install Nginx"
+dnf install nginx -y &>>${LOG}
 
-systemctl enable nginx
-systemctl start nginx
+print_head "Remove Nginx old content"
+rm -rf /usr/share/nginx/html/* &>>${LOG}
 
-rm -rf /usr/share/nginx/html/*
+print_head "Download roboshop Frontend content "
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>${LOG}
 
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip
+cd /usr/share/nginx/html &>>${LOG}
 
-cd /usr/share/nginx/html
-unzip /tmp/frontend.zip
+print_head "Extract Frontend Content"
+unzip /tmp/frontend.zip &>>${LOG}
 
-cp ${script_location}/files/nginx-roboshop.conf /etc/nginx/default.d/roboshop.conf
+print_head "Copy Roboshop Nginx config file"
+cp ${script_location}/files/nginx-roboshop.conf /etc/nginx/default.d/roboshop.conf &>>${LOG}
 
-systemctl restart nginx
+print_head "Enable Nginx"
+systemctl enable nginx &>>${LOG}
+
+print_head "Restart Nginx"
+systemctl restart nginx &>>${LOG}
