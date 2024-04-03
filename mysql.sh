@@ -6,23 +6,28 @@ if [ -z "${root_mysql_password}" ]; then
 fi
 
 print_head "Disable MySQL Default Module"
-dnf module disable mysql -y
+dnf module disable mysql -y &>>${LOG}
+status_check
 
 print_head "Copy MySQL Repo File"
-cp ${script_location}/files/mysql.repo /etc/yum.repos.d/mysql.repo
+cp ${script_location}/files/mysql.repo /etc/yum.repos.d/mysql.repo &>>${LOG}
+status_check
 
 print_head "Install MySQL Server"
-dnf install mysql-community-server -y
+dnf install mysql-community-server -y &>>${LOG}
+status_check
 
 print_head "Enable MySQL"
-systemctl enable mysqld
+systemctl enable mysqld &>>${LOG}
+status_check
 
 print_head "Start MySQL"
-systemctl start mysqld
+systemctl start mysqld &>>${LOG}
+status_check
 
 print_head "Reset Default Database Password"
-mysql_secure_installation --set-root-pass ${root_mysql_password}
+mysql_secure_installation --set-root-pass ${root_mysql_password} &>>${LOG}
 if [ $? -eq 1 ]; then
   echo "Password is already changed"
 fi
-
+status_check

@@ -34,7 +34,7 @@ APP_PREREQ() {
   status_check
 
   print_head "Extracting App Content"
-  cd /app
+  cd /app &>>${LOG}
   unzip /tmp/${component}.zip &>>${LOG}
   status_check
 }
@@ -90,22 +90,22 @@ LOAD_SCHEMA() {
 
 NODEJS() {
   print_head "Disable NodeJS"
-  dnf module disable nodejs -y
+  dnf module disable nodejs -y &>>${LOG}
   status_check
 
   print_head "Enable NodeJS18"
-  dnf module enable nodejs:18 -y
+  dnf module enable nodejs:18 -y &>>${LOG}
   status_check
 
   print_head "Install NodeJS"
-  dnf install nodejs -y
+  dnf install nodejs -y &>>${LOG}
   status_check
 
   APP_PREREQ
 
   print_head "Installing NodeJS Dependencies"
-  cd /app
-  npm install
+  cd /app &>>${LOG}
+  npm install &>>${LOG}
   status_check
 
   SYSTEMD_SETUP
@@ -115,21 +115,19 @@ NODEJS() {
 
 
 MAVEN() {
-
   print_head "Install Maven"
-  dnf install maven -y
+  dnf install maven -y &>>${LOG}
   status_check
 
   APP_PREREQ
 
-  cd /app
-
   print_head "Build a package"
+  cd /app &>>${LOG}
   mvn clean package  &>>${LOG}
   status_check
 
   print_head "Copy App file to App Location"
-  mv target/${component}-1.0.jar ${component}.jar
+  mv target/${component}-1.0.jar ${component}.jar &>>${LOG}
   status_check
 
   SYSTEMD_SETUP
