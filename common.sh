@@ -16,7 +16,6 @@ print_head() {
 }
 
 APP_PREREQ() {
-
   print_head "Add Application User"
   id roboshop &>>${LOG}
   if [ $? -ne 0 ]; then
@@ -67,7 +66,7 @@ LOAD_SCHEMA() {
       status_check
 
       print_head "Install Mongo Client"
-      yum install mongodb-org-shell -y &>>${LOG}
+      dnf install mongodb-org-shell -y &>>${LOG}
       status_check
 
       print_head "Load Schema"
@@ -98,25 +97,20 @@ NODEJS() {
   dnf module enable nodejs:18 -y
   status_check
 
+  print_head "Install NodeJS"
   dnf install nodejs -y
+  status_check
 
-  useradd roboshop
+  APP_PREREQ
 
-  mkdir /app
-
-  curl -L -o /tmp/cart.zip https://roboshop-artifacts.s3.amazonaws.com/cart.zip
-  cd /app
-  unzip /tmp/cart.zip
-
+  print_head "Installing NodeJS Dependencies"
   cd /app
   npm install
+  status_check
 
-  cp ${script_location}/files/${component}.service /etc/systemd/system/cart.service
+  SYSTEMD_SETUP
 
-  systemctl daemon-reload
-
-  systemctl enable cart
-  systemctl start cart
+  LOAD_SCHEMA
 }
 
 
@@ -124,7 +118,40 @@ MAVEN() {
 
   print_head "Install Maven"
   dnf install maven -y
+  status_check
 
   APP_PREREQ
 
+  cd /app
+
+  print_head "Build a package"
+  mvn clean package  &>>${LOG}
+  status_check
+
+  print_head "Copy App file to App Location"
+  mv target/${component}-1.0.jar ${component}.jar
+  status_check
+
+  SYSTEMD_SETUP
+
+  LOAD_SCHEMA
+}
+
+PYTHON() {
+  print_head "Install Python"
+  dnf install python36 gcc python3-devel -y &>>${LOG}
+  status_check
+
+  APP_PREREQ
+
+  print_head "Download Dependencies"
+  cd /app
+  pip3.6 install -r requirements.txt  &>>${LOG}
+  status_check
+
+  print_head "Update Passwords in Service File"
+  sed -i -e "s/roboshop_rabbitmq_password/${roboshop_rabbitmq_password}/" ${script_location}/files/${component}.service  &>>${LOG}
+  status_check
+
+  SYSTEMD_SETUP
 }
