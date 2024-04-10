@@ -2,6 +2,6 @@ source common.sh
 
 component=catalogue
 schema_load=true
-schema_type=mongod
+schema_type=mongo
 NODEJS
 
