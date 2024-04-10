@@ -1,4 +1,4 @@
-script_location=${pwd}
+script_location=$(pwd)
 LOG=/tmp/roboshop.log
 
 status_check() {
