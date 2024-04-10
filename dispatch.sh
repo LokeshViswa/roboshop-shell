@@ -1,5 +1,8 @@
 source common.sh
 
+component=dispatch
+
+
 print_head "Install Golang"
 dnf install golang -y &>>${LOG}
 status_check
