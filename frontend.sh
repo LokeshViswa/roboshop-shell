@@ -2,7 +2,7 @@ source common.sh
 
 print_head "Install Nginx"
 dnf install nginx -y &>>${LOG}
-status_checkp85000
+status_check
 
 print_head "Remove Nginx old content"
 rm -rf /usr/share/nginx/html/* &>>${LOG}
