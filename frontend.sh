@@ -2,14 +2,14 @@ source common.sh
 
 print_head "Install Nginx"
 dnf install nginx -y &>>${LOG}
-status_check
+status_checkp85000
 
 print_head "Remove Nginx old content"
 rm -rf /usr/share/nginx/html/* &>>${LOG}
 status_check
 
 print_head "Download Roboshop Frontend content "
-curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>${LOG}
+curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip  &>>${LOG}
 status_check
 
 cd /usr/share/nginx/html &>>${LOG}

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##### Change these values ###
-ZONE_ID="Z0298975260EYKFALU1CJ"
+ZONE_ID="Z0217389I597IFNUE4FO"
 DOMAIN="lokesh33.online"
 SG_NAME="allow-all"
 env=dev
