@@ -77,7 +77,7 @@ LOAD_SCHEMA() {
     if [ ${schema_type} == "mysql"  ]; then
 
       print_head "Install MySQL Client"
-      yum install mysql -y &>>${LOG}
+      dnf install mysql -y &>>${LOG}
       status_check
 
       print_head "Load Schema"
@@ -133,6 +133,10 @@ MAVEN() {
   SYSTEMD_SETUP
 
   LOAD_SCHEMA
+
+  print_head "Restart ${component} service "
+  systemctl restart ${component} &>>${LOG}
+  status_check
 }
 
 PYTHON() {
