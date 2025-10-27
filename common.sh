@@ -70,7 +70,7 @@ LOAD_SCHEMA() {
       status_check
 
       print_head "Load Schema"
-      mongo --host mongodb-dev.lokesh33.online </app/schema/${component}.js &>>${LOG}
+      mongo --host mongodb-dev.lokeshviswa70.sbs </app/schema/${component}.js &>>${LOG}
       status_check
     fi
 
@@ -81,7 +81,7 @@ LOAD_SCHEMA() {
       status_check
 
       print_head "Load Schema"
-      mysql -h mysql-dev.lokesh33.online -uroot -p${root_mysql_password} < /app/schema/shipping.sql  &>>${LOG}
+      mysql -h mysql-dev.lokeshviswa70.sbs -uroot -p${root_mysql_password} < /app/schema/shipping.sql  &>>${LOG}
       status_check
     fi
 
