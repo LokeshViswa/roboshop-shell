@@ -1,11 +1,11 @@
 source common.sh
 
-print_head "Install Redis Repo"
-dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>${LOG}
+print_head "Disable Redis"
+dnf module disable redis -y
 status_check
 
 print_head "Enable Redis"
-dnf module enable redis:remi-6.2 -y &>>${LOG}
+dnf module enable redis:6 -y &>>${LOG}
 status_check
 
 print_head "Install Redis"
